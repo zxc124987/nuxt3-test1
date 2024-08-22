@@ -3,7 +3,6 @@
 <template>
   <div>
     <h1>Page: index</h1>
-    <NuxtLink to="about">about</NuxtLink>
   </div>
 </template>
 

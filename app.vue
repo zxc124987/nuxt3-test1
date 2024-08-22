@@ -8,7 +8,9 @@ onMounted(() => {});
     <el-container>
       <el-header>Header</el-header>
       <el-container>
-        <el-aside width="200px">Aside</el-aside>
+        <el-aside width="200px">
+          <SidebarMenu />
+        </el-aside>
         <el-container>
           <el-main>
             <NuxtPage />
