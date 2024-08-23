@@ -5,5 +5,18 @@ export default defineNuxtConfig({
   modules: [
     "@element-plus/nuxt"
   ],
-  css: ["element-plus/dist/index.css", '~/assets/sass/main.sass'],
+  css: [
+    "element-plus/dist/index.css",
+    '~/assets/sass/main.sass'
+  ],
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.API_URL || 'https://default.api.com',
+      appName: process.env.APP_NAME || 'DefaultAppName'
+    },
+    // 私有環境變量
+    // private: {
+    //   secret: process.env.SECRET_KEY || 'defaultSecret'
+    // }
+  }
 })
