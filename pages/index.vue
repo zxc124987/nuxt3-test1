@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
-
-interface RuleForm {
-  acct_id: string;
-  pword: string;
-}
+import type { Login } from "../models/login";
 
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
@@ -12,11 +8,11 @@ const router = useRouter();
 
 const formRef = ref<FormInstance>();
 
-const form = ref<RuleForm>({
+const form = ref<Login>({
   acct_id: "",
   pword: "",
 });
-const rules = ref<FormRules<RuleForm>>({
+const rules = ref<FormRules<Login>>({
   acct_id: [{ required: true, message: "必填", trigger: "change" }],
   pword: [{ required: true, message: "必填", trigger: "change" }],
 });
