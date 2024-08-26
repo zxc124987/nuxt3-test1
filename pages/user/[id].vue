@@ -2,7 +2,7 @@
 const route = useRoute()
 const { id } = route.params
 onMounted(() => {
-  console.log(route.params);
+  // console.log(route.params);
 })
 </script>
 

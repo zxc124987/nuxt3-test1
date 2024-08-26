@@ -1,34 +1,87 @@
-<script setup>
-// const { data } = await useFetch(
-//   "https://60bd9841ace4d50017aab3ec.mockapi.io/api/post_card"
-// );
+<script setup lang="ts">
+import type { FormInstance, FormRules } from "element-plus";
+
+interface RuleForm {
+  acct_id: string;
+  pword: string;
+}
 
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
-const res = ref(null);
+const router = useRouter();
 
-async function login() {
-  const { data } = await useFetch(`${apiUrl}acct/login`, {
-    method: "post",
-    body: {
-      acct_id: "Hank",
-      pword: "a8888888",
-    },
+const formRef = ref<FormInstance>();
+
+const form = ref<RuleForm>({
+  acct_id: "",
+  pword: "",
+});
+const rules = ref<FormRules<RuleForm>>({
+  acct_id: [{ required: true, message: "必填", trigger: "change" }],
+  pword: [{ required: true, message: "必填", trigger: "change" }],
+});
+
+function submit(formEl: FormInstance) {
+  if (!formEl) return;
+  formEl.validate((valid) => {
+    if (valid) {
+      login(form.value);
+    }
   });
 }
 
-// async function logontest() {
-//   const { data } = await useFetch(`${apiUrl}acct/logontest`);
-//   console.log(data);
-// }
+async function login(formData: object) {
+  const { data } = await useFetch(`${apiUrl}acct/login`, {
+    method: "post",
+    body: formData,
+  });
+  if (!data.value.success) return;
+  router.push({ name: "dashboard" });
+  console.log(data.value);
+}
 </script>
 
 <template>
-  <div>
-    <h1>Page: index</h1>
-    <el-button @click="login">login</el-button>
-    <!-- <el-button @click="logontest">logontest</el-button> -->
+  <div class="login">
+    <el-form label-position="top" ref="formRef" :model="form" :rules="rules">
+      <el-form-item label="帳號" prop="acct_id">
+        <el-input
+          type="text"
+          v-model="form.acct_id"
+          placeholder="請輸入"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="密碼" prop="pword">
+        <el-input
+          type="password"
+          v-model="form.pword"
+          placeholder="請輸入"
+        ></el-input>
+      </el-form-item>
+      <el-button type="primary" @click="submit(formRef)">送出</el-button>
+    </el-form>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="sass">
+.login
+  height: 100%
+  background: linear-gradient(135deg, rgb(245, 245, 248) 22px, #0000000a 22px, #0000000a 24px, transparent 24px, transparent 67px, #0000000a 67px, #0000000a 69px, transparent 69px), linear-gradient(225deg, rgb(245, 245, 248) 22px, #0000000a 22px, #0000000a 24px, transparent 24px, transparent 67px, #0000000a 67px, #0000000a 69px, transparent 69px) 0 64px
+  background-color: rgb(245, 245, 248)
+  background-size: 64px 128px
+
+  .el-form
+    width: 300px
+    padding: 40px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    background-color: #ffffff
+    border-radius: 10px
+    border: 1px solid #c8ced3
+
+    .el-button
+      width: 100%
+      margin-top: 20px
+</style>

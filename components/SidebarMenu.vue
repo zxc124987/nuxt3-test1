@@ -8,12 +8,20 @@ import {
   Connection,
 } from "@element-plus/icons-vue";
 
+const props = defineProps({
+  menuSwitch: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+});
+
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 
 const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 </script>
 
@@ -22,6 +30,7 @@ const handleClose = (key: string, keyPath: string[]) => {
     <el-menu
       default-active="1"
       class="el-menu-vertical-demo"
+      :collapse="props.menuSwitch"
       @open="handleOpen"
       @close="handleClose"
     >
@@ -43,16 +52,22 @@ const handleClose = (key: string, keyPath: string[]) => {
       <el-menu-item index="2">
         <el-icon><icon-menu /></el-icon>
         <span>
-          <NuxtLink to="/user">/user/index</NuxtLink>
+          <NuxtLink to="/">index</NuxtLink>
         </span>
       </el-menu-item>
       <el-menu-item index="3">
+        <el-icon><icon-menu /></el-icon>
+        <span>
+          <NuxtLink to="/user">/user/index</NuxtLink>
+        </span>
+      </el-menu-item>
+      <el-menu-item index="4">
         <el-icon><ChatRound /></el-icon>
         <span>
           <NuxtLink to="/user/test">/user/test</NuxtLink>
         </span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="5">
         <el-icon><document /></el-icon>
         <span>
           <NuxtLink :to="{ name: 'user-id', params: { id: 7 } }"
@@ -60,13 +75,13 @@ const handleClose = (key: string, keyPath: string[]) => {
           >
         </span>
       </el-menu-item>
-      <el-menu-item index="5">
+      <el-menu-item index="6">
         <el-icon><setting /></el-icon>
         <span>
           <NuxtLink to="/about">about</NuxtLink>
         </span>
       </el-menu-item>
-      <el-menu-item index="6">
+      <el-menu-item index="7">
         <el-icon><Connection /></el-icon>
         <span>
           <NuxtLink to="/omg">404</NuxtLink>
