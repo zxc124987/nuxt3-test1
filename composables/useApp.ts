@@ -1,4 +1,4 @@
-export function useApp1() {
+export function useApp() {
   const loading = useState("loading", () => false);
 
   return { loading };

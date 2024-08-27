@@ -1,8 +1,8 @@
-import { useApp1 } from "@/composables/useApp";
+import { useApp } from "@/composables/useApp";
 import type { Response } from "~/models/response";
 
 export async function useCustomFetch(url: string, options?: any) {
-  const { loading } = useApp1();
+  const { loading } = useApp();
 
   loading.value = true;
   // 請求攔截

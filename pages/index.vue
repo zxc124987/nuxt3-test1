@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../models/login";
-import { useApp1 } from "@/composables/useApp";
+import { useApp } from "@/composables/useApp";
 import type { Response } from "~/models/response";
 
-const { loading } = useApp1();
+const { loading } = useApp();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const router = useRouter();

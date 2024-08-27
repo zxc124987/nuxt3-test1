@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Menu } from "@element-plus/icons-vue";
-import { useApp1 } from "@/composables/useApp";
+import { useApp } from "@/composables/useApp";
 import { ElMessage } from "element-plus";
 import type { Response } from "./models/response";
 
-const { loading } = useApp1();
+const { loading } = useApp();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const route = useRoute();
