@@ -11,12 +11,17 @@
   },
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
+    "@pinia/nuxt": "^0.5.4",
     "nuxt": "^3.12.4",
+    "pinia": "^2.2.2",
     "vue": "latest"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.9",
     "element-plus": "^2.8.0",
     "sass": "^1.77.8"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

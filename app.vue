@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { Menu } from "@element-plus/icons-vue";
+import { useApp1 } from "@/composables/useApp";
+import { ElMessage } from "element-plus";
+import type { Response } from "./models/response";
+
+const { loading } = useApp1();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const route = useRoute();
@@ -16,8 +21,24 @@ function toggleMenuHandler() {
 }
 
 async function logout() {
-  const { data } = await useFetch(`${apiUrl}acct/logout`);
-  if (!data.value.success) return;
+  const res: Response = await $fetch(`${apiUrl}acct/logout`, {
+    onRequest({ request, options }) {
+      // 設定請求時夾帶的標頭
+      loading.value = true;
+    },
+    onResponse({ request, response, options }) {
+      // 處理請求回應的資料
+      if (response._data.success) {
+        loading.value = false;
+        ElMessage({
+          message: `登出${response._data.message}！`,
+          type: "success",
+        });
+      }
+      return response._data;
+    },
+  });
+  if (!res.success) return;
   router.replace({ name: "index" });
 }
 
@@ -44,7 +65,7 @@ onMounted(() => {});
 
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container v-loading.fullscreen.lock="loading">
       <el-header v-if="displayHeader">
         <el-button
           type="primary"
@@ -52,7 +73,11 @@ onMounted(() => {});
           :icon="Menu"
           @click="toggleMenuHandler"
         />
-        <el-button class="logout" @click="logout">登出</el-button>
+        <el-popconfirm title="確定要登出嗎？" @confirm="logout">
+          <template #reference>
+            <el-button class="logout">登出</el-button>
+          </template>
+        </el-popconfirm>
       </el-header>
       <el-container>
         <el-aside v-if="displaySidebar">

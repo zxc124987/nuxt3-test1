@@ -3,18 +3,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: [
-    "@element-plus/nuxt", "@nuxtjs/google-fonts"
+    "@element-plus/nuxt", "@nuxtjs/google-fonts", "@pinia/nuxt"
   ],
-  // app: {
-  //   head: {
-  //     link: [
-  //       {
-  //         rel: 'stylesheet',
-  //         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap'
-  //       }
-  //     ]
-  //   }
-  // },
   css: [
     "element-plus/dist/index.css",
     '~/assets/sass/main.sass'

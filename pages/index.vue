@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../models/login";
+import { useApp1 } from "@/composables/useApp";
+import type { Response } from "~/models/response";
 
+const { loading } = useApp1();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const router = useRouter();
 
-const formRef = ref<FormInstance>();
+const formRef = ref<any>();
 
 const form = ref<Login>({
   acct_id: "",
@@ -27,13 +30,27 @@ function submit(formEl: FormInstance) {
 }
 
 async function login(formData: object) {
-  const { data } = await useFetch(`${apiUrl}acct/login`, {
+  const res: Response = await $fetch(`${apiUrl}acct/login`, {
     method: "post",
     body: formData,
+    onRequest({ request, options }) {
+      // 設定請求時夾帶的標頭
+      loading.value = true;
+    },
+    onResponse({ request, response, options }) {
+      // 處理請求回應的資料
+      if (response._data.success) {
+        loading.value = false;
+        ElMessage({
+          message: `登入${response._data.message}！`,
+          type: "success",
+        });
+      }
+      return response._data;
+    },
   });
-  if (!data.value.success) return;
+  if (!res.success) return;
   router.push({ name: "dashboard" });
-  console.log(data.value);
 }
 </script>
 
@@ -51,6 +68,7 @@ async function login(formData: object) {
         <el-input
           type="password"
           v-model="form.pword"
+          show-password
           placeholder="請輸入"
         ></el-input>
       </el-form-item>
