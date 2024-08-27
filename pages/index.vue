@@ -2,9 +2,9 @@
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../models/login";
 import { useApp } from "@/composables/useApp";
-import type { Response } from "~/models/response";
+import { useHttp } from "@/composables/useHttp";
 
-const { loading } = useApp();
+// const { loading } = useApp();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const router = useRouter();
@@ -30,26 +30,11 @@ function submit(formEl: FormInstance) {
 }
 
 async function login(formData: object) {
-  const res: Response = await $fetch(`${apiUrl}acct/login`, {
+  const { data } = await useHttp(`${apiUrl}acct/login`, {
     method: "post",
     body: formData,
-    onRequest({ request, options }) {
-      // 設定請求時夾帶的標頭
-      loading.value = true;
-    },
-    onResponse({ request, response, options }) {
-      // 處理請求回應的資料
-      if (response._data.success) {
-        loading.value = false;
-        ElMessage({
-          message: `登入${response._data.message}！`,
-          type: "success",
-        });
-      }
-      return response._data;
-    },
   });
-  if (!res.success) return;
+  if (!data.value.success) return;
   router.push({ name: "dashboard" });
 }
 </script>

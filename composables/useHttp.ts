@@ -1,7 +1,7 @@
 import { useApp } from "@/composables/useApp";
 import type { Response } from "~/models/response";
 
-export async function useCustomFetch(url: string, options?: any) {
+export async function useHttp(url: string, options?: any) {
   const { loading } = useApp();
 
   loading.value = true;
@@ -15,19 +15,15 @@ export async function useCustomFetch(url: string, options?: any) {
     };
   }
 
-  // 使用原始 useFetch 發起請求
   const { data, error, refresh
-  } = await useFetch<Response>(url, options);
+  } = await useFetch<any>(url, options);
 
   // 偵聽攔截
   watchEffect(() => {
-    setTimeout(() => {
-      if (data.value) {
-        if (!data.value.success) return;
-        loading.value = false;
-        console.log(data.value);
-      }
-    }, 1000);
+    if (data.value) {
+      if (!data.value.success) return;
+      loading.value = false;
+    }
   });
 
   return { data, error, refresh };

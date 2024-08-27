@@ -2,7 +2,7 @@
 import { Menu } from "@element-plus/icons-vue";
 import { useApp } from "@/composables/useApp";
 import { ElMessage } from "element-plus";
-import type { Response } from "./models/response";
+import { useHttp } from "./composables/useHttp";
 
 const { loading } = useApp();
 const config = useRuntimeConfig();
@@ -21,24 +21,8 @@ function toggleMenuHandler() {
 }
 
 async function logout() {
-  const res: Response = await $fetch(`${apiUrl}acct/logout`, {
-    onRequest({ request, options }) {
-      // 設定請求時夾帶的標頭
-      loading.value = true;
-    },
-    onResponse({ request, response, options }) {
-      // 處理請求回應的資料
-      if (response._data.success) {
-        loading.value = false;
-        ElMessage({
-          message: `登出${response._data.message}！`,
-          type: "success",
-        });
-      }
-      return response._data;
-    },
-  });
-  if (!res.success) return;
+  const { data } = await useHttp(`${apiUrl}acct/logout`);
+  if (!data.value.success) return;
   router.replace({ name: "index" });
 }
 
