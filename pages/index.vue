@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../models/login";
-import { useApp } from "@/composables/useApp";
 import { useHttp } from "@/composables/useHttp";
 
-// const { loading } = useApp();
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiUrl;
 const router = useRouter();
@@ -37,6 +35,8 @@ async function login(formData: object) {
   if (!data.value.success) return;
   router.push({ name: "dashboard" });
 }
+
+onMounted(async () => {});
 </script>
 
 <template>

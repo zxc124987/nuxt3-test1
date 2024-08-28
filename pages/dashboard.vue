@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div class="main">
+  <div>
     <h1>歡迎來到儀表板</h1>
   </div>
 </template>
