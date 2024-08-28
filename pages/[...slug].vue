@@ -47,8 +47,9 @@
 </template>
 
 <script setup>
+const event = useRequestEvent()
 definePageMeta({ layout: false });
-setResponseStatus(404);
+setResponseStatus(event, 404);
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
-import type { Login } from "../models/login";
+import type { Login } from "../types/login";
 import { useHttp } from "@/composables/useHttp";
 
 const config = useRuntimeConfig();

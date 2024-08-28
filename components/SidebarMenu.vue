@@ -1,28 +1,10 @@
 <script lang="ts" setup>
-import {
-  Document,
-  Menu as IconMenu,
-  ChatRound,
-  Location,
-  Setting,
-  Connection,
-} from "@element-plus/icons-vue";
-
-interface Menu {
-  children_items: Object[];
-  ma_permission: Number;
-  mi_code: String;
-  mi_name: String;
-  mi_order_no: Number;
-  mi_path: String;
-  mi_sid: String;
-  mi_type: Number;
-  sel_type: any;
-}
+import { Document, HomeFilled, FolderOpened } from "@element-plus/icons-vue";
+import type { SidebarMenu } from "~/types/sidebarMenu";
 
 const props = defineProps<{
   menuSwitch: boolean;
-  sidebarMenu: Menu;
+  sidebarMenu: SidebarMenu[];
 }>();
 
 onMounted(() => {});
@@ -35,14 +17,20 @@ onMounted(() => {});
       class="el-menu-vertical-demo"
       :collapse="props.menuSwitch"
     >
-      <template v-for="(menu1, index1) in props.sidebarMenu">
+      <el-menu-item index="0">
+        <el-icon><HomeFilled /></el-icon>
+        <template #title>
+          <NuxtLink to="/dashboard">首頁</NuxtLink>
+        </template>
+      </el-menu-item>
+      <template v-for="(menu1, index1) in sidebarMenu">
         <el-sub-menu
           v-if="menu1.children_items.length"
           :key="menu1.mi_sid"
-          :index="index1 + 1"
+          :index="`${index1 + 1}`"
         >
           <template #title>
-            <el-icon><location /></el-icon>
+            <el-icon><FolderOpened /></el-icon>
             <span>{{ menu1.mi_name }}</span>
           </template>
           <el-menu-item
@@ -50,7 +38,7 @@ onMounted(() => {});
             :key="menu2.mi_sid"
             :index="`${index1 + 1}-${index2 + 1}`"
           >
-            <el-icon><icon-menu /></el-icon>
+            <el-icon><Document /></el-icon>
             <span>
               <NuxtLink :to="menu2.mi_path">{{ menu2.mi_name }}</NuxtLink>
             </span>
