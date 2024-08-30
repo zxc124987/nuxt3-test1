@@ -20,6 +20,10 @@ export async function useHttp(url: string, options?: object, showMsg: boolean = 
     ...options
   });
 
+  if (error.value) {
+    console.error('Error fetching data:', error.value);
+  }
+
   watch(pending, (newValue) => {
     loading.value = newValue;
   })

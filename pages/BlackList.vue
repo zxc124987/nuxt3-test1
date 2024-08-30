@@ -373,52 +373,40 @@ function drawerSubmit(formEl: FormInstance) {
 /** call api */
 
 async function getBlackList(form: object) {
-  try {
-    const { data } = await useHttp(
-      `blacklist/list`,
-      {
-        method: "post",
-        body: form,
-      },
-      false
-    );
-    if (!data.value.success) return;
-    blackLists.value = data.value.result_list;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await useHttp(
+    `blacklist/list`,
+    {
+      method: "post",
+      body: form,
+    },
+    false
+  );
+  if (!data.value.success) return;
+  blackLists.value = data.value.result_list;
 }
 
 async function getChnlList() {
-  try {
-    const { data } = await useHttp(
-      `select_item/list`,
-      {
-        method: "post",
-        body: { sel_type: "CHNL" },
-      },
-      false
-    );
-    chnlList.value = data.value.result_list;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await useHttp(
+    `select_item/list`,
+    {
+      method: "post",
+      body: { sel_type: "CHNL" },
+    },
+    false
+  );
+  chnlList.value = data.value.result_list;
 }
 
 async function getPIDList() {
-  try {
-    const { data } = await useHttp(
-      `select_item/list`,
-      {
-        method: "post",
-        body: { sel_type: "PID" },
-      },
-      false
-    );
-    PIDList.value = data.value.result_list;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await useHttp(
+    `select_item/list`,
+    {
+      method: "post",
+      body: { sel_type: "PID" },
+    },
+    false
+  );
+  PIDList.value = data.value.result_list;
 }
 
 async function createBlackList(formData: BlackList) {
