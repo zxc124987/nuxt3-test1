@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;width: 100%;">
+  <div style="display: flex; width: 100%">
     <el-button type="primary" link :icon="Menu" @click="toggleMenuHandler" />
     <el-popconfirm
       title="確定要登出嗎？"
@@ -21,10 +21,12 @@ import { useHttp } from "#imports";
 
 const router = useRouter();
 
-const menuSwitch = ref<boolean>(false);
+const emits = defineEmits<{
+  (e: "menuHandleSwitch"): void;
+}>();
 
 function toggleMenuHandler() {
-  menuSwitch.value = !menuSwitch.value;
+  emits("menuHandleSwitch");
 }
 
 async function logout() {

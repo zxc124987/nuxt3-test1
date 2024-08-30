@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container v-loading.fullscreen.lock="loading">
       <el-header>
-        <Header></Header>
+        <Header @menuHandleSwitch="menutoggleHandler"></Header>
       </el-header>
       <el-container>
         <el-aside>
@@ -23,11 +23,14 @@
 
 <script setup>
 import { useApp } from "@/composables/useApp";
-import { useHttp } from "#imports";
 
 const { loading, sidebarMenu } = useApp();
 
 const menuSwitch = ref(false);
+
+function menutoggleHandler(val) {
+  menuSwitch.value = !menuSwitch.value;
+}
 
 onMounted(() => {});
 </script>
@@ -36,7 +39,6 @@ onMounted(() => {});
 .common-layout
   .el-container
     .el-header
-      background-color: #575757
       color: #cdcdcd
 
     .el-container
