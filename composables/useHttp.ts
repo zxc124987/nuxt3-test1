@@ -1,10 +1,12 @@
 import { useApp } from "@/composables/useApp";
 
 export async function useHttp(url: string, options?: object, showMsg: boolean = true) {
+  const config = useRuntimeConfig();
+  const apiUrl = config.public.apiUrl;
   const { loading } = useApp();
 
   const { data, pending, error, refresh
-  } = await useFetch<any>(url, {
+  } = await useFetch<any>(`${apiUrl}/${url}`, {
     onResponse({ response }) {
       if (showMsg) {
         ElMessage({

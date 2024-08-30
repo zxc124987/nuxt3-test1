@@ -238,9 +238,6 @@ import { useHttp } from "@/composables/useHttp";
 import type { BlackList } from "../types/blackList";
 import type { SelectItem } from "../types/selectItem";
 
-const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
-
 const drawerFormObjectModel = {
   bl_pid: "",
   chan_sids: [],
@@ -378,7 +375,7 @@ function drawerSubmit(formEl: FormInstance) {
 async function getBlackList(form: object) {
   try {
     const { data } = await useHttp(
-      `${apiUrl}blacklist/list`,
+      `blacklist/list`,
       {
         method: "post",
         body: form,
@@ -395,7 +392,7 @@ async function getBlackList(form: object) {
 async function getChnlList() {
   try {
     const { data } = await useHttp(
-      `${apiUrl}select_item/list`,
+      `select_item/list`,
       {
         method: "post",
         body: { sel_type: "CHNL" },
@@ -411,7 +408,7 @@ async function getChnlList() {
 async function getPIDList() {
   try {
     const { data } = await useHttp(
-      `${apiUrl}select_item/list`,
+      `select_item/list`,
       {
         method: "post",
         body: { sel_type: "PID" },
@@ -425,7 +422,7 @@ async function getPIDList() {
 }
 
 async function createBlackList(formData: BlackList) {
-  const { data } = await useHttp(`${apiUrl}blacklist/create`, {
+  const { data } = await useHttp(`blacklist/create`, {
     method: "POST",
     body: formData,
   });
@@ -437,7 +434,7 @@ async function createBlackList(formData: BlackList) {
 }
 
 async function editBlackList(formData: BlackList) {
-  const { data } = await useHttp(`${apiUrl}blacklist/edit`, {
+  const { data } = await useHttp(`blacklist/edit`, {
     method: "POST",
     body: formData,
   });
@@ -449,7 +446,7 @@ async function editBlackList(formData: BlackList) {
 }
 
 async function deleteBlackListHandler(bl_pid: string) {
-  const { data } = await useHttp(`${apiUrl}blacklist/delete`, {
+  const { data } = await useHttp(`blacklist/delete`, {
     method: "delete",
     body: { bl_pid },
   });

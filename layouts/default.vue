@@ -48,8 +48,6 @@ import { useApp } from "@/composables/useApp";
 import { useHttp } from "#imports";
 
 const { loading, sidebarMenu } = useApp();
-const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
 const route = useRoute();
 const router = useRouter();
 
@@ -64,7 +62,7 @@ function toggleMenuHandler() {
 }
 
 async function logout() {
-  const { data } = await useHttp(`${apiUrl}acct/logout`);
+  const { data } = await useHttp(`acct/logout`);
   if (!data.value.success) return;
   router.replace({ name: "index" });
 }

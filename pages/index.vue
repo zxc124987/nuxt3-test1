@@ -3,8 +3,6 @@ import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
 import { useHttp } from "@/composables/useHttp";
 
-const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
 const router = useRouter();
 
 const formRef = ref<any>();
@@ -32,7 +30,7 @@ function submit(formEl: FormInstance) {
 }
 
 async function login(formData: object) {
-  const { data } = await useHttp(`${apiUrl}acct/login`, {
+  const { data } = await useHttp(`acct/login`, {
     method: "post",
     body: formData,
   });
