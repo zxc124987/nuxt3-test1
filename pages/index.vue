@@ -22,7 +22,11 @@ function submit(formEl: FormInstance) {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
-      login(form.value);
+      const hardcode = {
+        acct_id: "first_test",
+        pword: "test1234",
+      };
+      login(hardcode);
     }
   });
 }

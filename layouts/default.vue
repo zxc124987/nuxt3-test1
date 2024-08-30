@@ -10,6 +10,7 @@
         />
         <el-popconfirm
           title="確定要登出嗎？"
+          width="250"
           confirm-button-text="確定"
           cancel-button-text="取消"
           @confirm="logout"

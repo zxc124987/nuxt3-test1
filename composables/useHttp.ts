@@ -3,16 +3,9 @@ import { useApp } from "@/composables/useApp";
 export async function useHttp(url: string, options?: object, showMsg: boolean = true) {
   const { loading } = useApp();
 
-  const { data, error, refresh
+  const { data, pending, error, refresh
   } = await useFetch<any>(url, {
-    onRequest({ options }) {
-      loading.value = true;
-    },
-    onRequestError({ request, options, error }) {
-      loading.value = false;
-    },
     onResponse({ response }) {
-      loading.value = false;
       if (showMsg) {
         ElMessage({
           message: response._data.message,
@@ -25,5 +18,9 @@ export async function useHttp(url: string, options?: object, showMsg: boolean = 
     ...options
   });
 
-  return { data, error, refresh };
+  watch(pending, (newValue) => {
+    loading.value = newValue;
+  })
+
+  return { data, pending, error, refresh };
 }

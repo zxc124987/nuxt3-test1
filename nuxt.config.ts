@@ -7,8 +7,12 @@ export default defineNuxtConfig({
   ],
   googleFonts: {
     families: {
-      'Noto Sans TC': true,
-      'Roboto': true,
+      'Noto Sans TC': {
+        wght: [400, 500, 600, 700],
+      },
+      'Roboto': {
+        wght: [400, 500, 600, 700],
+      },
     },
     download: true, // 將字體下載到本地，並打包到專案裡，防止用戶訪問不了google字體服務
     base64: false, // 不要 base64格式，不然首頁下載文件會非常大
@@ -17,7 +21,9 @@ export default defineNuxtConfig({
   },
   css: [
     "element-plus/dist/index.css",
-    '~/assets/sass/main.sass'
+    '~/assets/sass/main.sass',
+    '~/assets/sass/button.sass',
+    '~/assets/sass/normalize/normalize.css'
   ],
   runtimeConfig: {
     public: {
@@ -28,5 +34,8 @@ export default defineNuxtConfig({
     // private: {
     //   secret: process.env.SECRET_KEY || 'defaultSecret'
     // }
-  }
+  },
+  plugins: [
+    '~/plugins/element-plus.ts'
+  ]
 })

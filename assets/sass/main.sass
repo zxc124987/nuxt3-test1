@@ -1,5 +1,20 @@
 @import ./mixins/_rwd
-@import ./normalize/normalize
+
+::-webkit-scrollbar
+  width: 8px
+  height: 8px
+
+::-webkit-scrollbar-track
+  // background-color: #e1e1e1
+  background-color: transparent
+  border-radius: 10px
+
+::-webkit-scrollbar-thumb
+  background-color: #818181
+  border-radius: 10px
+
+::-webkit-scrollbar-thumb:hover
+  background-color: #555555
 
 *
   margin: 0
@@ -36,7 +51,8 @@
 
     .main
       height: 100%
-      background-color: #e4e5e6
+      overflow-y: auto
+      background-color: #f0f3f6
       box-sizing: border-box
 
   .el-footer
@@ -47,3 +63,47 @@
     align-items: center
     justify-content: flex-end
     font-size: 14px
+
+.el-table--fit
+  .el-table__inner-wrapper
+    .el-table__body-wrapper
+      .el-scrollbar
+        .el-scrollbar__view
+          .el-table__body
+            .el-table__body-header
+              tr
+                th
+                  .cell
+                    color: #232323
+                    font-weight: 500
+                    white-space: nowrap
+
+.el-pagination
+  margin: 15px 0px
+
+  .btn-prev,
+  .btn-next
+    color: #727272 !important
+    background-color: transparent !important
+
+  .el-pager
+    > li
+      color: #727272 !important
+      background-color: transparent !important
+
+      &.is-active
+        color: #555AD5 !important
+
+  .el-pagination__jump
+    .el-pagination__goto,
+    .el-pagination__classifier
+      color: #727272 !important
+
+    .el-input
+      width: 48px !important
+
+      .el-input__wrapper
+        background-color: transparent !important
+
+        .el-input__inner
+          color: #727272 !important        
