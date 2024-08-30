@@ -6,6 +6,6 @@
 
 <template>
   <div>
-    <h1>歡迎來到儀表板</h1>
+    <p>歡迎來到儀表板</p>
   </div>
 </template>

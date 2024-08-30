@@ -3,6 +3,7 @@ import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
 import { useHttp } from "@/composables/useHttp";
 
+definePageMeta({ layout: false });
 const router = useRouter();
 
 const formRef = ref<any>();
@@ -66,7 +67,7 @@ onMounted(async () => {});
 
 <style scoped lang="sass">
 .login
-  height: 100%
+  height: 100vh
   background: linear-gradient(135deg, rgb(245, 245, 248) 22px, #0000000a 22px, #0000000a 24px, transparent 24px, transparent 67px, #0000000a 67px, #0000000a 69px, transparent 69px), linear-gradient(225deg, rgb(245, 245, 248) 22px, #0000000a 22px, #0000000a 24px, transparent 24px, transparent 67px, #0000000a 67px, #0000000a 69px, transparent 69px) 0 64px
   background-color: rgb(245, 245, 248)
   background-size: 64px 128px

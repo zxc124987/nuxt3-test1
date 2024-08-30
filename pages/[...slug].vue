@@ -48,8 +48,8 @@
 
 <script setup>
 const event = useRequestEvent()
-definePageMeta({ layout: false });
 setResponseStatus(event, 404);
+definePageMeta({ layout: false });
 </script>
 
 <style scoped>
