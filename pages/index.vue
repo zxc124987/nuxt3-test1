@@ -26,6 +26,11 @@ function submit(formEl: FormInstance) {
         pword: "test1234",
       };
       login(hardcode);
+    } else {
+      ElMessage({
+        message: "表單輸入錯誤",
+        type: "error",
+      });
     }
   });
 }

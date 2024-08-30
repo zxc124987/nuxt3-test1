@@ -17,6 +17,7 @@ export async function useHttp(url: string, options?: object, showMsg: boolean = 
       return response._data
     },
     credentials: 'include',
+    watch: false,
     ...options
   });
 
