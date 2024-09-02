@@ -26,15 +26,13 @@ function submit(formEl: FormInstance) {
         acct_id: "first_test",
         pword: "test1234",
       };
-      // login(hardcode);
-      const { data } = await loginService().login(hardcode)
-      if (data?.value?.success) {
-        ElMessage({
-          message: data?.value?.message,
-          type: data.value.success ? "success" : "error",
-        });
-        router.push({ name: "dashboard" });
-      }
+      const { data } = await loginService().login(hardcode);
+      ElMessage({
+        message: data?.value?.message,
+        type: data?.value?.success ? "success" : "error",
+      });
+      if (!data?.value?.success) return;
+      router.push({ name: "dashboard" });
     } else {
       ElMessage({
         message: "表單輸入錯誤",
@@ -43,15 +41,6 @@ function submit(formEl: FormInstance) {
     }
   });
 }
-
-// async function login(formData: Login) {
-//   const { data } = await useHttp(`acct/login`, {
-//     method: "post",
-//     body: formData,
-//   });
-//   if (!data.value.success) return;
-//   router.push({ name: "dashboard" });
-// }
 
 onMounted(async () => {});
 </script>
