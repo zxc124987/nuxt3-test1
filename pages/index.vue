@@ -35,7 +35,7 @@ function submit(formEl: FormInstance) {
   });
 }
 
-async function login(formData: object) {
+async function login(formData: Login) {
   const { data } = await useHttp(`acct/login`, {
     method: "post",
     body: formData,

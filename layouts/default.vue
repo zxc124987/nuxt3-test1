@@ -11,7 +11,7 @@
         <el-container>
           <el-main>
             <div class="main" style="padding: 15px">
-              <NuxtPage />
+              <slot />
             </div>
           </el-main>
           <el-footer><Footer></Footer></el-footer>

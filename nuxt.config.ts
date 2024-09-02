@@ -37,5 +37,9 @@ export default defineNuxtConfig({
   },
   plugins: [
     '~/plugins/element-plus.ts'
-  ]
+  ],
+  routeRules: {
+    '/': { prerender: true },
+    '/productPlan': { ssr: true },
+  }
 })
