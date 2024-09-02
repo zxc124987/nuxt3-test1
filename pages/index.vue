@@ -2,12 +2,12 @@
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
 import { useHttp } from "@/composables/useHttp";
+import { login } from "../server/api/login";
 
 definePageMeta({ layout: false });
 const router = useRouter();
 
 const formRef = ref<any>();
-
 const form = ref<Login>({
   acct_id: "",
   pword: "",
@@ -19,13 +19,21 @@ const rules = ref<FormRules<Login>>({
 
 function submit(formEl: FormInstance) {
   if (!formEl) return;
-  formEl.validate((valid) => {
+  formEl.validate(async (valid) => {
     if (valid) {
       const hardcode = {
         acct_id: "first_test",
         pword: "test1234",
       };
-      login(hardcode);
+      // login(hardcode);
+      const { data } = await login(hardcode);
+      if (data.value.success) {
+        ElMessage({
+          message: data.value.message,
+          type: data.value.success ? "success" : "error",
+        });
+        router.push({ name: "dashboard" });
+      }
     } else {
       ElMessage({
         message: "表單輸入錯誤",
@@ -35,14 +43,14 @@ function submit(formEl: FormInstance) {
   });
 }
 
-async function login(formData: Login) {
-  const { data } = await useHttp(`acct/login`, {
-    method: "post",
-    body: formData,
-  });
-  if (!data.value.success) return;
-  router.push({ name: "dashboard" });
-}
+// async function login(formData: Login) {
+//   const { data } = await useHttp(`acct/login`, {
+//     method: "post",
+//     body: formData,
+//   });
+//   if (!data.value.success) return;
+//   router.push({ name: "dashboard" });
+// }
 
 onMounted(async () => {});
 </script>

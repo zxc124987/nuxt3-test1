@@ -6,7 +6,7 @@
       width="250"
       confirm-button-text="確定"
       cancel-button-text="取消"
-      @confirm="logout"
+      @confirm="logoutHandler"
     >
       <template #reference>
         <el-button class="logout">登出</el-button>
@@ -18,6 +18,7 @@
 <script lang="ts" setup>
 import { Menu } from "@element-plus/icons-vue";
 import { useHttp } from "#imports";
+import { logout } from "../server/api/login";
 
 const router = useRouter();
 
@@ -29,10 +30,15 @@ function toggleMenuHandler() {
   emits("menuHandleSwitch");
 }
 
-async function logout() {
-  const { data } = await useHttp(`acct/logout`);
-  if (!data.value.success) return;
-  router.replace({ name: "index" });
+async function logoutHandler() {
+  const { data } = await logout();
+  if (data.value.success) {
+    ElMessage({
+      message: data.value.message,
+      type: data.value.success ? "success" : "error",
+    });
+    router.replace({ name: "index" });
+  }
 }
 </script>
 
