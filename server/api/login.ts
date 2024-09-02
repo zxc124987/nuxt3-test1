@@ -1,24 +1,17 @@
 import { newUseHttp } from "~/composables/newUseHttp";
-import type { Login } from "~/types/login";
-import type { ApiResponse } from "~/types/apiResponse";
+import type { Login } from "../../types/login"
 
-const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+export function loginService() {
+  const config = useRuntimeConfig();
+  const apiUrl = config.public.apiUrl;
 
-enum Api {
-  login = "acct/login",
-  logonTest = "Acct/logontest",
-  logout = "acct/logout"
-}
+  const login = (data: Login) => {
+    return newUseHttp.post(`${apiUrl}/acct/login`, data)
+  }
 
-export async function login(params: Login) {
-  return newUseHttp.post(`${apiUrl}/${Api.login}`, params)
-}
+  const logout = () => {
+    return newUseHttp.get(`${apiUrl}/acct/logout`)
+  }
 
-export async function logonTest() {
-  return newUseHttp.get(`${apiUrl}/${Api.logonTest}`)
-}
-
-export async function logout() {
-  return newUseHttp.get(`${apiUrl}/${Api.logout}`)
+  return { login, logout }
 }

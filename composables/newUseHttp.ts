@@ -1,26 +1,31 @@
 import { useApp } from "@/composables/useApp";
+import type { ApiResponse } from "~/types/apiResponse";
 
-function fetch(url: string, options?: object) {
+interface ResOptions<T> {
+  data: T
+  code: number
+  success: boolean
+  message: string
+}
+
+function fetch<T>(url: string, options?: object) {
   const { loading } = useApp();
 
-  return useFetch<any>(url, {
+  return useFetch<ResOptions<T>>(url, {
+    // 設定請求時的 headers
     onRequest({ request, options }) {
-      // 設定請求時的 headers
       loading.value = true;
-      // console.log("onRequest");
     },
+    // 捕捉請求時發生的錯誤
     onRequestError({ request, options, error }) {
-      // 捕捉請求時發生的錯誤
-      // console.log("onRequestError");
     },
+    // 處理請求回覆資料
     onResponse({ request, response, options }) {
-      // 處理請求回覆資料
       loading.value = false;
       return response._data;
     },
+    // 捕捉請求回覆時發生的錯誤
     onResponseError({ request, response, options }) {
-      // 捕捉請求回覆時發生的錯誤
-      // console.log("onResponseError");
     },
     credentials: 'include',
     watch: false,
@@ -29,16 +34,16 @@ function fetch(url: string, options?: object) {
 }
 
 export const newUseHttp = {
-  get: <T>(url: string, params?: any) => {
+  get: (url: string, params?: any) => {
     return fetch(url, { method: "GET", params })
   },
-  post: <T>(url: string, body?: any) => {
+  post: (url: string, body?: any) => {
     return fetch(url, { method: "POST", body })
   },
-  put: <T>(url: string, body?: any) => {
+  put: (url: string, body?: any) => {
     return fetch(url, { method: "PUT", body })
   },
-  delete: <T>(url: string, body?: any) => {
+  delete: (url: string, body?: any) => {
     return fetch(url, { method: "DELETE", body })
   },
 }

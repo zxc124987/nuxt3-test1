@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { Menu } from "@element-plus/icons-vue";
 import { useHttp } from "#imports";
-import { logout } from "../server/api/login";
+import { loginService } from "../server/api/login";
 
 const router = useRouter();
 
@@ -31,7 +31,7 @@ function toggleMenuHandler() {
 }
 
 async function logoutHandler() {
-  const { data } = await logout();
+  const { data } = await loginService().logout();
   if (data.value.success) {
     ElMessage({
       message: data.value.message,

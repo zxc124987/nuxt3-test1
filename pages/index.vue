@@ -2,7 +2,8 @@
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
 import { useHttp } from "@/composables/useHttp";
-import { login } from "../server/api/login";
+import { loginService } from "../server/api/login";
+import type { ApiResponse } from "~/types/apiResponse";
 
 definePageMeta({ layout: false });
 const router = useRouter();
@@ -26,10 +27,10 @@ function submit(formEl: FormInstance) {
         pword: "test1234",
       };
       // login(hardcode);
-      const { data } = await login(hardcode);
-      if (data.value.success) {
+      const { data } = await loginService().login(hardcode)
+      if (data?.value?.success) {
         ElMessage({
-          message: data.value.message,
+          message: data?.value?.message,
           type: data.value.success ? "success" : "error",
         });
         router.push({ name: "dashboard" });
