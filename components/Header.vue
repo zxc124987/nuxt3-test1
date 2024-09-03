@@ -37,7 +37,7 @@ async function logoutHandler() {
       message: data.value.message,
       type: data.value.success ? "success" : "error",
     });
-    router.replace({ name: "index" });
+    router.replace({ name: "login" });
   }
 }
 </script>

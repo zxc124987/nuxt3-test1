@@ -20,7 +20,7 @@ onMounted(() => {});
       <el-menu-item index="0">
         <el-icon><HomeFilled /></el-icon>
         <template #title>
-          <NuxtLink to="/dashboard">首頁</NuxtLink>
+          <NuxtLink to="/">首頁</NuxtLink>
         </template>
       </el-menu-item>
       <template v-for="(menu1, index1) in sidebarMenu">

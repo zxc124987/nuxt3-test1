@@ -1,24 +1,16 @@
 import { useApp } from "@/composables/useApp";
 import type { ApiResponse } from "~/types/apiResponse";
 
-interface ResOptions<T> {
-  data: T
-  code: number
-  success: boolean
-  message: string
-}
-
-function fetch<T>(url: string, options?: object) {
+function fetch(url: string, options?: object) {
   const { loading } = useApp();
-
-  return useFetch<ResOptions<T>>(url, {
+  return useFetch<any>(url, {
     // 設定請求時的 headers
     onRequest({ request, options }) {
       loading.value = true;
     },
     // 捕捉請求時發生的錯誤
     onRequestError({ request, options, error }) {
-      console.log("onRequestError");
+      console.log(request, options, error);
     },
     // 處理請求回覆資料
     onResponse({ request, response, options }) {
