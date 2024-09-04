@@ -1,5 +1,6 @@
 export function useCommon() {
-  const loading = ref(false);
+  const loading = useState("loading", () => false);
+  const sidebarMenu = useState("sidebarMenu", () => []);
 
-  return { loading };
+  return { loading, sidebarMenu };
 }

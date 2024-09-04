@@ -6,7 +6,7 @@
       </el-header>
       <el-container>
         <el-aside>
-          <SidebarMenu :menuSwitch="menuSwitch" :sidebarMenu="commonStore.sidebarMenu" />
+          <SidebarMenu :menuSwitch="menuSwitch" :sidebarMenu="sidebarMenu" />
         </el-aside>
         <el-container>
           <el-main>
@@ -24,8 +24,7 @@
 <script setup>
 import { useCommon } from "~/composables/useCommon";
 
-const { loading } = useCommon();
-const commonStore = useCommonStore();
+const { loading, sidebarMenu } = useCommon();
 
 const menuSwitch = ref(false);
 

@@ -23,7 +23,7 @@ onMounted(() => {});
           <NuxtLink to="/">首頁</NuxtLink>
         </template>
       </el-menu-item>
-      <template v-for="(menu1, index1) in sidebarMenu">
+      <template v-for="(menu1, index1) in props.sidebarMenu">
         <el-sub-menu
           v-if="menu1.children_items.length"
           :key="menu1.mi_sid"
