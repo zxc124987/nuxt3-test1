@@ -1,9 +1,9 @@
-import { useApp } from "@/composables/useApp";
+import { useCommon } from "~/composables/useCommon";
 
 export async function useHttp(url: string, options?: object, showMsg: boolean = true) {
   const config = useRuntimeConfig();
   const apiUrl = config.public.apiUrl;
-  const { loading } = useApp();
+  const { loading } = useCommon();
 
   const { data, pending, error, refresh
   } = await useFetch<any>(`${apiUrl}/${url}`, {

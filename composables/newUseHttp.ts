@@ -1,8 +1,8 @@
-import { useApp } from "@/composables/useApp";
+import { useCommon } from "~/composables/useCommon";
 import type { ApiResponse } from "~/types/apiResponse";
 
 function fetch(url: string, options?: object) {
-  const { loading } = useApp();
+  const { loading } = useCommon();
   return useFetch<any>(url, {
     // 設定請求時的 headers
     onRequest({ request, options }) {

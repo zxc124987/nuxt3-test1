@@ -22,13 +22,13 @@
 </template>
 
 <script setup>
-import { useApp } from "@/composables/useApp";
+import { useCommon } from "~/composables/useCommon";
 
-const { loading, sidebarMenu } = useApp();
+const { loading } = useCommon();
 
 const menuSwitch = ref(false);
 
-function menutoggleHandler(val) {
+function menutoggleHandler() {
   menuSwitch.value = !menuSwitch.value;
 }
 

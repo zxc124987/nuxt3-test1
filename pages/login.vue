@@ -6,7 +6,6 @@ import { useHttp } from "@/composables/useHttp";
 import { loginService } from "../server/api/login";
 import type { ApiResponse } from "~/types/apiResponse";
 
-const { isLoggedIn } = useApp();
 const router = useRouter();
 
 const formRef = ref<any>();
@@ -33,7 +32,6 @@ function submit(formEl: FormInstance) {
         type: data?.value?.success ? "success" : "error",
       });
       if (!data?.value?.success) return;
-      isLoggedIn.value = true;
       router.push({ name: "index" });
     } else {
       ElMessage({
@@ -44,9 +42,7 @@ function submit(formEl: FormInstance) {
   });
 }
 
-onMounted(async () => {
-  isLoggedIn.value = false;
-});
+onMounted(async () => {});
 </script>
 
 <template>
