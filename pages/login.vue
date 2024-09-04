@@ -7,6 +7,7 @@ import { loginService } from "../server/api/login";
 import type { ApiResponse } from "~/types/apiResponse";
 
 const router = useRouter();
+const { userInfo } = useCommon();
 
 const formRef = ref<any>();
 const form = ref<Login>({
@@ -32,6 +33,7 @@ function submit(formEl: FormInstance) {
         type: data?.value?.success ? "success" : "error",
       });
       if (!data?.value?.success) return;
+      userInfo.value = form.value;
       router.push({ name: "index" });
     } else {
       ElMessage({
@@ -42,7 +44,9 @@ function submit(formEl: FormInstance) {
   });
 }
 
-onMounted(async () => {});
+onMounted(async () => {
+  userInfo.value = null;
+});
 </script>
 
 <template>

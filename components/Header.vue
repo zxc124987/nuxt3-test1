@@ -21,6 +21,7 @@ import { useHttp } from "#imports";
 import { loginService } from "../server/api/login";
 
 const router = useRouter();
+const { userInfo } = useCommon();
 
 const emits = defineEmits<{
   (e: "menuHandleSwitch"): void;
@@ -37,6 +38,7 @@ async function logoutHandler() {
       message: data.value.message,
       type: data.value.success ? "success" : "error",
     });
+    userInfo.value = null;
     router.replace({ name: "login" });
   }
 }

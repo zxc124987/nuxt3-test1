@@ -14,7 +14,7 @@ export function loginService() {
   }
 
   const logonTest = () => {
-    return newUseHttp.get(`${apiUrl}/acct/logontest`)
+    return newUseHttp.get(`${apiUrl}/acct/logontest7`)
   }
 
   return { login, logout, logonTest }
