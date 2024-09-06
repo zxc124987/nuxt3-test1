@@ -2,12 +2,19 @@
   <div class="bg-purple" ref="error">
     <div class="stars">
       <div class="central-body">
-        <img
+        <!-- <img
           class="image-404"
           src="http://salehriaz.com/404Page/img/404.svg"
           width="300px"
-        />
-        <a href="javascript:;" class="btn-go-home">GO BACK HOME</a>
+        /> -->
+        <div
+          class="statusCode"
+          style="color: #fff; font-size: 148px; font-weight: 800"
+        >
+          {{ error.statusCode }}
+        </div>
+        <div class="error-message" style="color: #fff; font-size: 48px; font-weight: 500">{{ error.message }}</div>
+        <a href="javascript:;" class="btn-go-home" @click="handleError">GO BACK HOME</a>
       </div>
       <div class="objects">
         <img
@@ -47,10 +54,14 @@
 </template>
 
 <script setup>
-const event = useRequestEvent()
-setResponseStatus(event, 404);
 definePageMeta({ layout: false });
-const route = useRoute();
+
+const props = defineProps({
+  error: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style scoped>
@@ -281,7 +292,7 @@ li a:hover {
 
 .central-body {
   /*    width: 100%;*/
-  padding: 17% 5% 10% 5%;
+  padding: 10% 5% 10% 5%;
   text-align: center;
 }
 
