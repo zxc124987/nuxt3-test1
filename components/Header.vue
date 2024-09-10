@@ -20,6 +20,7 @@ import { Menu } from "@element-plus/icons-vue";
 import type { ApiResponse } from "~/types/apiResponse";
 
 const isLogin = useCookie<Boolean>("isLogin");
+const { loading } = useCommon();
 
 const emits = defineEmits<{
   (e: "menuHandleSwitch"): void;
@@ -30,7 +31,15 @@ function toggleMenuHandler() {
 }
 
 async function logoutHandler() {
-  const { data: res } = await useFetch<ApiResponse>("/api/logout");
+  const { data: res } = await useFetch<ApiResponse>("/api/logout", {
+    onRequest({ request, options }) {
+      loading.value = true;
+    },
+    onResponse({ request, response, options }) {
+      loading.value = false;
+      return response._data;
+    },
+  });
   if (res?.value?.success) {
     navigateTo("/login");
     isLogin.value = false;

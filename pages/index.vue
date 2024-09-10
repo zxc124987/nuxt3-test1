@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <p>歡迎來到儀表板</p>
+    <p>index</p>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
       </el-header>
       <el-container>
         <el-aside>
-          <SidebarMenu :menuSwitch="menuSwitch" :sidebarMenu="menu" />
+          <SidebarMenu :menuSwitch="menuSwitch" :sidebarMenu="sidebarMenu" />
         </el-aside>
         <el-container>
           <el-main>
@@ -24,9 +24,10 @@
 <script setup>
 import { useCommon } from "~/composables/useCommon";
 
-const { loading, menu } = useCommon();
+const { loading } = useCommon();
 
 const menuSwitch = ref(false);
+const sidebarMenu = ref([]);
 
 function menutoggleHandler() {
   menuSwitch.value = !menuSwitch.value;

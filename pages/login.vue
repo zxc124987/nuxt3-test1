@@ -2,10 +2,13 @@
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
 import type { ApiResponse } from "~/types/apiResponse";
+import { useHttp } from "@/composables/useHttp";
 
-definePageMeta({ layout: false });
+definePageMeta({
+  layout: "login",
+});
 const isLogin = useCookie<Boolean>("isLogin");
-const { menu } = useCommon();
+const { loading } = useCommon();
 
 const formRef: Ref = ref(null);
 const form: Ref<Login> = ref({
@@ -28,9 +31,15 @@ function submit(formEl: FormInstance) {
       const { data: res } = await useFetch<ApiResponse>("/api/login", {
         method: "POST",
         body: hardcode,
+        onRequest({ request, options }) {
+          loading.value = true;
+        },
+        onResponse({ request, response, options }) {
+          loading.value = false;
+          return response._data;
+        },
       });
       if (!res?.value?.success) return;
-      menu.value = res.value.result_obj.menu_items2;
       isLogin.value = true;
       navigateTo("/");
     } else {
@@ -44,7 +53,6 @@ function submit(formEl: FormInstance) {
 
 onMounted(async () => {
   isLogin.value = false;
-  menu.value = [];
 });
 </script>
 
