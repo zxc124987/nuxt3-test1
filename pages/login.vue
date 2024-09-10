@@ -1,20 +1,18 @@
 <script setup lang="ts">
-definePageMeta({ layout: false });
 import type { FormInstance, FormRules } from "element-plus";
 import type { Login } from "../types/login";
-import { useHttp } from "@/composables/useHttp";
-import { loginService } from "../server/api/login";
 import type { ApiResponse } from "~/types/apiResponse";
 
-const router = useRouter();
-const { userInfo } = useCommon();
+definePageMeta({ layout: false });
+const isLogin = useCookie<Boolean>("isLogin");
+const { menu } = useCommon();
 
-const formRef = ref<any>();
-const form = ref<Login>({
-  acct_id: "",
-  pword: "",
+const formRef: Ref = ref(null);
+const form: Ref<Login> = ref({
+  acct_id: "a",
+  pword: "a",
 });
-const rules = ref<FormRules<Login>>({
+const rules: Ref<FormRules<Login>> = ref({
   acct_id: [{ required: true, message: "必填", trigger: "change" }],
   pword: [{ required: true, message: "必填", trigger: "change" }],
 });
@@ -27,14 +25,13 @@ function submit(formEl: FormInstance) {
         acct_id: "first_test",
         pword: "test1234",
       };
-      const { data } = await loginService().login(hardcode);
-      ElMessage({
-        message: data?.value?.message,
-        type: data?.value?.success ? "success" : "error",
+      const { data: res } = await useFetch<ApiResponse>("/api/login", {
+        method: "POST",
+        body: hardcode,
       });
-      if (!data?.value?.success) return;
-      userInfo.value = form.value;
-      router.push({ name: "index" });
+      if (!res?.value?.success) return;
+      isLogin.value = true;
+      navigateTo("/");
     } else {
       ElMessage({
         message: "表單輸入錯誤",
@@ -45,7 +42,8 @@ function submit(formEl: FormInstance) {
 }
 
 onMounted(async () => {
-  userInfo.value = null;
+  isLogin.value = false;
+  menu.value = [];
 });
 </script>
 
@@ -53,11 +51,7 @@ onMounted(async () => {
   <div class="login">
     <el-form label-position="top" ref="formRef" :model="form" :rules="rules">
       <el-form-item label="帳號" prop="acct_id">
-        <el-input
-          type="text"
-          v-model="form.acct_id"
-          placeholder="請輸入"
-        ></el-input>
+        <el-input type="text" v-model="form.acct_id" placeholder="請輸入"></el-input>
       </el-form-item>
       <el-form-item label="密碼" prop="pword">
         <el-input

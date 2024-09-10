@@ -28,19 +28,11 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL || 'https://default.api.com',
-      appName: process.env.APP_NAME || 'DefaultAppName'
+      apiUrl: process.env.API_URL,
+      appName: process.env.APP_NAME,
     },
-    // 私有環境變量
-    // private: {
-    //   secret: process.env.SECRET_KEY || 'defaultSecret'
-    // }
   },
   plugins: [
     '~/plugins/element-plus.ts'
   ],
-  routeRules: {
-    '/': { prerender: true },
-    '/productPlan': { ssr: true },
-  }
 })

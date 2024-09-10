@@ -1,12 +1,20 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  // const { sidebarMenu, userInfo } = useCommon();
+  const isLogin = useCookie("isLogin");
+  const { menu } = useCommon();
 
-  // if (process.server) return;
-  // if (to.path !== "/login") {
-  //   const { data } = await loginService().logonTest();
-  //   sidebarMenu.value = data?.value?.result_obj?.menu_items2;
-  //   if (!data?.value?.success) {
-  //     return navigateTo("/login");
-  //   }
-  // }
+  if (!isLogin.value && to.name !== "login") {
+    return navigateTo("/login");
+  }
+
+  if (process.client) {
+    if (isLogin.value && to.name !== "login") {
+      const config = useRuntimeConfig();
+      const apiUrl = config.public.apiUrl;
+      const res = await fetch(`${apiUrl}/acct/logontest`, {
+        credentials: "include",
+      });
+      const data = await res.json();
+      menu.value = data.result_obj.menu_items2;
+    }
+  }
 });

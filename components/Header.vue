@@ -17,11 +17,9 @@
 
 <script lang="ts" setup>
 import { Menu } from "@element-plus/icons-vue";
-import { useHttp } from "#imports";
-import { loginService } from "../server/api/login";
+import type { ApiResponse } from "~/types/apiResponse";
 
-const router = useRouter();
-const { userInfo } = useCommon();
+const isLogin = useCookie<Boolean>("isLogin");
 
 const emits = defineEmits<{
   (e: "menuHandleSwitch"): void;
@@ -32,17 +30,12 @@ function toggleMenuHandler() {
 }
 
 async function logoutHandler() {
-  const { data } = await loginService().logout();
-  if (data.value.success) {
-    ElMessage({
-      message: data.value.message,
-      type: data.value.success ? "success" : "error",
-    });
-    userInfo.value = null;
-    router.replace({ name: "login" });
+  const { data: res } = await useFetch<ApiResponse>("/api/logout");
+  if (res?.value?.success) {
+    navigateTo("/login");
+    isLogin.value = false;
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
