@@ -13,10 +13,7 @@
             <el-input placeholder="請輸入" v-model="form.bl_pid"></el-input>
           </el-form-item>
           <el-form-item label="修改人" prop="md_user_name">
-            <el-input
-              placeholder="請輸入"
-              v-model="form.md_user_name"
-            ></el-input>
+            <el-input placeholder="請輸入" v-model="form.md_user_name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -57,14 +54,7 @@
     <el-button style="margin-bottom: 30px" type="primary">查詢</el-button>
 
     <div style="display: flex; align-items: center; margin-bottom: 15px">
-      <div
-        style="
-          font-size: 20px;
-          font-weight: 500;
-          color: #3b3c70;
-          margin-bottom: 15px;
-        "
-      >
+      <div style="font-size: 20px; font-weight: 500; color: #3b3c70; margin-bottom: 15px">
         黑名單
       </div>
       <el-button
@@ -76,7 +66,7 @@
       >
     </div>
 
-    <el-table :data="tableData" table-layout="auto" row-key="bl_pid">
+    <el-table v-if="false" :data="tableData" table-layout="auto" row-key="bl_pid">
       <el-table-column prop="bl_pid" label="PID代碼">
         <template #default="{ row }">
           <div style="font-weight: 500">{{ row.bl_pid }}</div>
@@ -119,6 +109,7 @@
     </el-table>
 
     <el-pagination
+      v-if="false"
       class="card-list-pagination mt-4 mb-0"
       layout="prev, pager, next, jumper"
       :page-size="pageSize"
@@ -128,6 +119,7 @@
     />
 
     <el-drawer
+      v-if="false"
       destroy-on-close
       size="45%"
       v-model="drawer"
@@ -211,10 +203,7 @@
             ></el-col>
             <el-col>
               <el-form-item label="修改日期(系統自動產生)" prop="md_date">
-                <el-input
-                  v-model="drawerForm.md_date"
-                  disabled
-                ></el-input> </el-form-item
+                <el-input v-model="drawerForm.md_date" disabled></el-input> </el-form-item
             ></el-col>
           </el-row>
         </el-form>
@@ -237,21 +226,20 @@ import type { FormInstance, FormRules } from "element-plus";
 import { useHttp } from "@/composables/useHttp";
 import type { BlackList } from "../types/blackList";
 import type { SelectItem } from "../types/selectItem";
+import type { ApiResponse } from "~/types/apiResponse";
 
 const drawerFormObjectModel = {
   bl_pid: "",
-  chan_sids: [],
-  pi_firstname: "",
-  pi_lastname: "",
-  bl_memo: "",
+  chan_name: "",
+  md_date_max: "",
+  md_date_min: "",
   md_user_name: "",
-  md_date: "",
 };
-const form = ref<BlackList>(drawerFormObjectModel);
+const form = ref<any>(drawerFormObjectModel);
 const rules = ref<FormRules<BlackList>>({});
 const pageSize = ref<number>(10);
 const currentPage = ref<number>(1);
-const blackLists = ref<BlackList[]>([]);
+const blackLists: Ref<Array<any>> = ref([]);
 const drawer = ref<boolean>(false);
 const drawerForm = ref<BlackList>({
   bl_pid: "",
@@ -263,9 +251,7 @@ const drawerForm = ref<BlackList>({
   md_date: "",
 });
 const drawerFormRules = ref<FormRules<BlackList>>({
-  bl_pid: [
-    { required: true, validator: changePIDValidator, trigger: "change" },
-  ],
+  bl_pid: [{ required: true, validator: changePIDValidator, trigger: "change" }],
   chan_sids: [{ required: true, message: "必填", trigger: "change" }],
 });
 const drawerIsAdd = ref<boolean>(false);
@@ -274,9 +260,7 @@ const chnlList = ref<SelectItem[]>([]);
 const drawerFormRef = ref<any>(null);
 
 const tableData = computed<BlackList[]>(() => {
-  blackLists.value.forEach(
-    (e) => (e.chan_name = e.chan_short_names?.join("/"))
-  );
+  blackLists.value.forEach((e) => (e.chan_name = e.chan_short_names?.join("/")));
   let data = JSON.parse(JSON.stringify(blackLists.value));
   const current = (currentPage.value - 1) * pageSize.value;
   const last = currentPage.value * pageSize.value;
@@ -373,16 +357,14 @@ function drawerSubmit(formEl: FormInstance) {
 /** call api */
 
 async function getBlackList(form: object) {
-  const { data } = await useHttp(
-    `blacklist/list`,
-    {
-      method: "post",
-      body: form,
-    },
-    false
-  );
-  if (!data.value.success) return;
-  blackLists.value = data.value.result_list;
+
+  const { data: blacklistRes } = await useFetch<ApiResponse>("/api/blackList", {
+    method: "POST",
+    body: form,
+  });
+  if (!blacklistRes?.value?.success) return;
+  blackLists.value = blacklistRes.value.result_list;
+  console.log(blackLists.value);
 }
 
 async function getChnlList() {
@@ -445,10 +427,9 @@ async function deleteBlackListHandler(bl_pid: string) {
 
 onMounted(async () => {
   await getBlackList(form.value);
-  await getChnlList();
-  await getPIDList();
+  // await getChnlList();
+  // await getPIDList();
 });
 </script>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

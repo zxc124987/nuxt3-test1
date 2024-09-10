@@ -30,6 +30,7 @@ function submit(formEl: FormInstance) {
         body: hardcode,
       });
       if (!res?.value?.success) return;
+      menu.value = res.value.result_obj.menu_items2;
       isLogin.value = true;
       navigateTo("/");
     } else {
