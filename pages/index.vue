@@ -5,7 +5,12 @@ import { useHttp } from "#imports";
 <template>
   <div>
     <p>index</p>
-    <NuxtLink to="/webApi">WebApi</NuxtLink>
+    <p>
+      <NuxtLink to="/webApi">WebApi</NuxtLink>
+    </p>
+    <p>
+      <NuxtLink to="/test">test</NuxtLink>
+    </p>
   </div>
 </template>
 
