@@ -3,9 +3,11 @@ export default defineEventHandler(async (event) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const body = await readBody(event);
 
-  const data = await $fetch(`${apiUrl}/blacklist/list`, {
+  const data = await fetch(`${apiUrl}/BlackList/List`, {
     method: "POST",
-    body: body,
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
   });
   return data;
 })

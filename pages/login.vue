@@ -28,20 +28,14 @@ function submit(formEl: FormInstance) {
         acct_id: "first_test",
         pword: "test1234",
       };
-      const { data: res } = await useFetch<ApiResponse>("/api/login", {
+      const { data: loginRes } = await useHttp("acct/login", {
         method: "POST",
         body: hardcode,
-        onRequest({ request, options }) {
-          loading.value = true;
-        },
-        onResponse({ request, response, options }) {
-          loading.value = false;
-          return response._data;
-        },
       });
-      if (!res?.value?.success) return;
-      isLogin.value = true;
-      navigateTo("/");
+      if (loginRes.value.success) {
+        isLogin.value = true;
+        navigateTo("/");
+      }
     } else {
       ElMessage({
         message: "表單輸入錯誤",

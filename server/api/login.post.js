@@ -6,9 +6,8 @@ export default defineEventHandler(async (event) => {
   const data = await fetch(`${apiUrl}/acct/login`, {
     method: "POST",
     body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
   });
   return data;
 });

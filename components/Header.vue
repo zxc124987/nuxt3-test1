@@ -18,6 +18,7 @@
 <script lang="ts" setup>
 import { Menu } from "@element-plus/icons-vue";
 import type { ApiResponse } from "~/types/apiResponse";
+import { useHttp } from "#imports";
 
 const isLogin = useCookie<Boolean>("isLogin");
 const { loading } = useCommon();
@@ -31,16 +32,8 @@ function toggleMenuHandler() {
 }
 
 async function logoutHandler() {
-  const { data: res } = await useFetch<ApiResponse>("/api/logout", {
-    onRequest({ request, options }) {
-      loading.value = true;
-    },
-    onResponse({ request, response, options }) {
-      loading.value = false;
-      return response._data;
-    },
-  });
-  if (res?.value?.success) {
+  const { data: logoutRes } = await useHttp("acct/logout");
+  if (logoutRes.value.success) {
     navigateTo("/login");
     isLogin.value = false;
   }

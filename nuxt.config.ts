@@ -35,4 +35,17 @@ export default defineNuxtConfig({
   plugins: [
     '~/plugins/element-plus.ts'
   ],
+  nitro: {
+    routeRules: {
+      '/api/**': {
+        cors: {
+          origin: 'https://122.146.250.130', // 允許的前端域名
+          methods: ['GET', 'POST', 'PUT', 'DELETE'], // 允許的請求方法
+          credentials: true, // 啟用憑證支持
+          allowedHeaders: ['Content-Type', 'Authorization'], // 允許的標頭
+          exposedHeaders: ['Set-Cookie'], // 允許暴露的標頭
+        },
+      },
+    },
+  },
 })
