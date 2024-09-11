@@ -26,6 +26,7 @@ export async function useHttp(url: string, options?: object, showMsg: boolean = 
   }
 
   watch(pending, (newValue) => {
+    // console.log(newValue);
     loading.value = newValue;
   })
 

@@ -30,30 +30,6 @@ const webApiList = ref([]);
 const miSidList = ref([]);
 const drawerIsAdd = ref(false);
 
-const { data: webApiRes } = await useHttp(
-  "webApi/list",
-  {
-    method: "POST",
-    body: form.value,
-  },
-  false
-);
-if (webApiRes.value.success) {
-  webApiList.value = webApiRes.value.result_list;
-}
-
-const { data: miSidRes } = await useHttp(
-  "select_item/auth_list",
-  {
-    method: "POST",
-    body: { sel_type: "MENU" },
-  },
-  false
-);
-if (miSidRes.value.success) {
-  miSidList.value = miSidRes.value.result_list;
-}
-
 const tableData = computed(() => {
   let data = JSON.parse(JSON.stringify(webApiList.value));
   data.forEach(
@@ -136,6 +112,30 @@ const saveWebApi = async (data) => {
     closeDrawer();
   }
 };
+
+const { data: webApiRes } = await useHttp(
+  "webApi/list",
+  {
+    method: "POST",
+    body: form.value,
+  },
+  false
+);
+if (webApiRes.value.success) {
+  webApiList.value = webApiRes.value.result_list;
+}
+
+const { data: miSidRes } = await useHttp(
+  "select_item/auth_list",
+  {
+    method: "POST",
+    body: { sel_type: "MENU" },
+  },
+  false
+);
+if (miSidRes.value.success) {
+  miSidList.value = miSidRes.value.result_list;
+}
 </script>
 
 <template>
@@ -161,13 +161,20 @@ const saveWebApi = async (data) => {
       </el-row>
     </el-form>
 
-    <el-button style="margin-bottom: 20px" type="primary" @click="searchFormHandler"
+    <el-button
+      style="margin-bottom: 20px"
+      type="primary"
+      @click="searchFormHandler"
       >查詢</el-button
     >
 
     <div style="display: flex; align-items: center; margin-bottom: 20px">
       <div class="custom-main-title mt-4">API管理</div>
-      <el-button style="margin-left: auto" type="primary" plain @click="openDrawerHandler"
+      <el-button
+        style="margin-left: auto"
+        type="primary"
+        plain
+        @click="openDrawerHandler"
         >新增</el-button
       >
     </div>
@@ -218,7 +225,12 @@ const saveWebApi = async (data) => {
       @current-change="currentChangeHandler"
     />
 
-    <el-drawer destroy-on-close size="45%" v-model="drawer" @closed="closeDrawer">
+    <el-drawer
+      destroy-on-close
+      size="45%"
+      v-model="drawer"
+      @closed="closeDrawer"
+    >
       <template #default>
         <el-form
           label-position="top"
@@ -229,7 +241,10 @@ const saveWebApi = async (data) => {
           :rules="drawerFormRules"
         >
           <el-form-item label="API路由" prop="ai_path">
-            <el-input placeholder="請輸入" v-model="drawerForm.ai_path"></el-input>
+            <el-input
+              placeholder="請輸入"
+              v-model="drawerForm.ai_path"
+            ></el-input>
           </el-form-item>
           <el-form-item label="對應選單" prop="mi_sid">
             <el-select class="w-100" v-model="drawerForm.mi_sid">
